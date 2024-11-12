@@ -18,11 +18,11 @@ namespace Smart_Class.Web.Application.Services
             _mapper = mapper;
         }
         #endregion
-        
+
         #region Get Func
         public async Task<IEnumerable<TeacherDto>> GetAllTeacher(string? Title = "")
         {
-            var res = _context.Teachers.AsQueryable();
+            var res = _context.Teachers.Where(P => P.Deleted == false).AsQueryable();
             if (Title != null) res = res.Where(p => p.LastName.ToLower().Trim().Contains(Title.ToLower().Trim()) || p.FirstName.ToLower().Trim().Contains(Title.ToLower().Trim()));
             return _mapper.Map<IEnumerable<TeacherDto>>(res);
         }
@@ -30,6 +30,11 @@ namespace Smart_Class.Web.Application.Services
         {
             var res = await _context.Teachers.Where(p => p.Deleted == false).FirstOrDefaultAsync(p => p.Id == Id);
             return _mapper.Map<TeacherDto>(res);
+        }
+        public async Task<IEnumerable<ClassDto>> getAllClassByTeacherId(Guid Teacherid)
+        {
+            var res = await _context.Classes.Where(P => P.Deleted == false && P.TeacherId == Teacherid).ToListAsync();
+            return _mapper.Map<IEnumerable<ClassDto>>(res);
         }
 
         #endregion

@@ -1,0 +1,45 @@
+@using Smart_Class.Web.Application.Dtos
+@model TeacherDto
+<h2>ویرایش کلاس @Model.FullName</h2>
+<br />
+@using (Html.BeginForm("UpdateTeacher", "Teacher", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.SSID, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.SSID, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.SSID, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        <input type="submit" value="ویرایش" class="btn btn-success m-1" />
+    </div>
+}
+<br />
+
+<div>
+    <a asp-action="index">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M5 12l14 0"></path>
+            <path d="M5 12l4 4"></path>
+            <path d="M5 12l4 -4"></path>
+        </svg>
+        بازگشت
+    </a>
+</div>

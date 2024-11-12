@@ -1,26 +1,8 @@
 @using Smart_Class.Web.Application.Dtos
-@model IEnumerable<TeacherDto>
-<button class="btn btn-success m-1"><a asp-action="CreateTeacher" class="link-light">افزودن</a></button>
+@model IEnumerable<ClassDto>
 <br />
 <br />
-<form class="card mb-2" asp-action="Index" asp-controller="Teacher" method="get">
-    <div class="card-header mb-0 pb-0 d-flex justify-content-between">
-        <h5>فیلتر</h5>
-        <div class="">
-            <a asp-action="Index" class="btn btn-sm btn-danger">حذف فیلتر</a>
-            <button type="submit" class="btn btn-success btn-sm">اعمال فیلتر</button>
-        </div>
-    </div>
-    <div class="card-body  mb-0">
-        <div class="row">
-            <div class="col-md-6">
-                <label>جستجو:</label>
-                <input style="width:90%" type="text" class="form-control" name="Title" value="@ViewBag.Title"
-                    placeholder="عنوان جستجوی خود را وارد کنید" />
-            </div>
-        </div>
-    </div>
-</form>
+
 @if (Model.Any())
 {
     @Html.AntiForgeryToken()
@@ -28,23 +10,30 @@
         <table class="table table-bordered table-hover table table-striped align-middle table-responsive">
             <thead>
                 <tr class="center">
-                    <th>نام و نام خانوادگی </th>
-                    <td>کدملی</td>
-                    <th>نقش</th>
+                    <th>عنوان </th>
+                    <th>Ip کلاس </th>
+                    <th>کد کلاس </th>
+                    <th>تاریخ شروع کلاس</th>
+                    <th>ساعت شروع کلاس</th>
+                    <th>ساعت پایان کلاس</th>
                     <th>ویرایش</th>
                     <th>حذف</th>
-                    <th>کلاس ها مربوط</th>
+                   
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr class="center">
-                        <td>@item.FullName</td>
-                        <td>@item.SSID</td>
-                        <td>استاد</td>
+                        <td>@item.Name</td>
+                        <td>@item.Class_IP</td>
+                        <td>@item.Code</td>
+                        <td>@item.Time_Holding</td>
+                        <td>@item.start_Time</td>
+                        <td>@item.End_Time</td>
+
                         <td>
-                            <a asp-action="UpdateTeacher" asp-route-Id="@item.Id">
+                            <a asp-action="UpdateClass" asp-controller="Class" asp-route-Id="@item.Id">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24"
                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -55,10 +44,10 @@
                             </a>
                         </td>
                         <td>
-                            <form style="border:none;box-shadow:none" asp-action="DeleteTeacher" asp-route-Id="@item.Id"
+                            <form style="border:none;box-shadow:none" asp-action="DeleteClass" asp-controller="Class" asp-route-Id="@item.Id"
                                 method="post" class="form-control">
                                 <button class="btn" type="submit"
-                                    onclick=" return confirm('آیا از حذف  @(item.FullName) مطمئن هستید؟');">
+                                    onclick=" return confirm('آیا از حذف  @(item.Name) مطمئن هستید؟');">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
                                         width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                         fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -71,12 +60,6 @@
                                     </svg>
                                 </button>
                             </form>
-                        </td>
-                        <td>
-                            <a asp-action="ViewClass" asp-route-TeacherId="@item.Id">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="category" width="24" height="24" stroke="currentColor"><path fill="#222" d="M52.65 18.48h-41.3a1.5 1.5 0 1 1 0-3h41.3a1.5 1.5 0 0 1 0 3zm0 10.01h-41.3a1.5 1.5 0 1 1 0-3h41.3a1.5 1.5 0 0 1 0 3zm0 10.02h-41.3a1.5 1.5 0 0 1 0-3h41.3a1.5 1.5 0 0 1 0 3zm0 10.01h-41.3a1.5 1.5 0 0 1 0-3h41.3a1.5 1.5 0 0 1 0 3z"></path></svg>
-
-                            </a>
                         </td>
                     </tr>
                 }

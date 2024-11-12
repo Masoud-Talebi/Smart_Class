@@ -5,6 +5,7 @@ namespace Smart_Class.Web.Application.Contracts
     public interface ITeacherService
     {
         Task<IEnumerable<TeacherDto>> GetAllTeacher(string? Title = "");
+        Task<IEnumerable<ClassDto>> getAllClassByTeacherId(Guid Teacherid);
         Task<TeacherDto> GetTeacherById(Guid Id);
         Task<TeacherDto> AddTeacher(AddTeacherDto addTeacher);
         Task<TeacherDto> UpdateTeacher(UpdateTeacherDto updateTeacher);

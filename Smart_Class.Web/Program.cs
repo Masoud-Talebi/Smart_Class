@@ -4,6 +4,11 @@ using Smart_Class.Web.Infrastructure;
 using Smart_Class.Web.Application.Services;
 using Smart_Class.Web;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Smart_Class.Web.Core.Domain;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Smart_Class.Web.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +31,25 @@ builder.Services.AddDbContextPool<IApplicationDbContext, ApplicationDbContext>((
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
+#endregion
+
+#region Idp Registration
+
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddIdentity<Teacher, IdentityRole<Guid>>().AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders().AddErrorDescriber<PersianIdentityErrorDescriber>();
+builder.Services.Configure<SecurityStampValidatorOptions>(option =>
+{
+    option.ValidationInterval = TimeSpan.FromSeconds(5);
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/Error";
+    options.Cookie.Name = "IncodityCookie";
+    options.LoginPath = "/signin";
+    options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+});
 #endregion
 var app = builder.Build();
 
