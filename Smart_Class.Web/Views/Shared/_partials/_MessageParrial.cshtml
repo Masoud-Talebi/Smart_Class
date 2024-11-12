@@ -1,0 +1,7 @@
+﻿@* @using System.Security.Claims
+@{
+    var cliams = User.Claims;
+    var fullname = User.Claims.FirstOrDefault(p => p.Type == "name").Value;
+} *@
+
+<a class="btn btn-outline-primary mx-3 mt-2 d-block">Masoud عزيز</a>

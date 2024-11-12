@@ -1,0 +1,90 @@
+@using Smart_Class.Web.Application.Dtos
+@model IEnumerable<TeacherDto>
+<button class="btn btn-success m-1"><a asp-action="CreateTeacher" class="link-light">افزودن</a></button>
+<br />
+<br />
+<form class="card mb-2" asp-action="Index" asp-controller="Teacher" method="get">
+    <div class="card-header mb-0 pb-0 d-flex justify-content-between">
+        <h5>فیلتر</h5>
+        <div class="">
+            <a asp-action="Index" class="btn btn-sm btn-danger">حذف فیلتر</a>
+            <button type="submit" class="btn btn-success btn-sm">اعمال فیلتر</button>
+        </div>
+    </div>
+    <div class="card-body  mb-0">
+        <div class="row">
+            <div class="col-md-6">
+                <label>جستجو:</label>
+                <input style="width:90%" type="text" class="form-control" name="Title" value="@ViewBag.Title"
+                    placeholder="عنوان جستجوی خود را وارد کنید" />
+            </div>
+        </div>
+    </div>
+</form>
+@if (Model.Any())
+{
+    @Html.AntiForgeryToken()
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table table-striped align-middle table-responsive">
+            <thead>
+                <tr class="center">
+                    <th>نام و نام خانوادگی </th>
+                    <td>کدملی</td>
+                    <th>نقش</th>
+                    @* @if(Is Owner){ *@
+                    <th>ویرایش</th>
+                    <th>حذف</th>
+                    @* } *@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="center">
+                        <td>@item.FullName</td>
+                        <td>@item.SSID</td>
+                        <td>استاد</td>
+                    @* @if(Is Owner){ *@
+                        <td>
+                            <a asp-action="UpdateClass" asp-route-Id="@item.Id">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24"
+                                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
+                                    <path d="M13.5 6.5l4 4"></path>
+                                </svg>
+                            </a>
+                        </td>
+                        <td>
+                            <form style="border:none;box-shadow:none" asp-action="DeleteClass" asp-route-Id="@item.Id"
+                                method="post" class="form-control">
+                                <button class="btn" type="submit"
+                                    onclick=" return confirm('آیا از حذف  @(item.FullName) مطمئن هستید؟');">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
+                                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M4 7l16 0"></path>
+                                        <path d="M10 11l0 6"></path>
+                                        <path d="M14 11l0 6"></path>
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+
+                    @* } *@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        داده برای نمایش موجود نیست!
+    </div>
+}

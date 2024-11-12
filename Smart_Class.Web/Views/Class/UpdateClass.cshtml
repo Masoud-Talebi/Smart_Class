@@ -1,0 +1,67 @@
+@using Smart_Class.Web.Application.Dtos
+@model ClassDto
+<h2>ویرایش کلاس @Model.Name</h2>
+<br />
+@using (Html.BeginForm("UpdateClass", "Class", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-group ">
+        <label class="control-label">نام مدرس</label>
+        @Html.DropDownList("TeacherId", ViewBag.teachers, "انتخاب مدرس", htmlAttributes: new { @class = "form-select Fix-Width", @data_val = "true", @data_val_required = "انتخاب مدرس الزامی است" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.Class_IP, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Class_IP, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Class_IP, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.Time_Holding, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Time_Holding, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Time_Holding, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.start_Time, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.start_Time, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.start_Time, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(model => model.End_Time, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.End_Time, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.End_Time, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        <input type="submit" value="ویرایش" class="btn btn-success m-1" />
+    </div>
+}
+<br />
+
+<div>
+    <a asp-action="index">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M5 12l14 0"></path>
+            <path d="M5 12l4 4"></path>
+            <path d="M5 12l4 -4"></path>
+        </svg>
+        بازگشت
+    </a>
+</div>
