@@ -31,6 +31,7 @@
                     <th>نام و نام خانوادگی </th>
                     <td>کدملی</td>
                     <th>نقش</th>
+                    <th>نام کاربری</th>
                     <th>ویرایش</th>
                     <th>حذف</th>
                     <th>کلاس ها مربوط</th>
@@ -42,7 +43,8 @@
                     <tr class="center">
                         <td>@item.FullName</td>
                         <td>@item.SSID</td>
-                        <td>استاد</td>
+                        <td>@item.Persian_RoleName</td>
+                        <td>@item.UserName</td>
                         <td>
                             <a asp-action="UpdateTeacher" asp-route-Id="@item.Id">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24"

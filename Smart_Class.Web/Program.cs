@@ -9,6 +9,7 @@ using Smart_Class.Web.Core.Domain;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Smart_Class.Web.Common;
+using Smart_Class.Web.Core.Domain.Ipd;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,8 +36,7 @@ builder.Services.AddScoped<ITeacherService, TeacherService>();
 
 #region Idp Registration
 
-builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddIdentity<Teacher, IdentityRole<Guid>>().AddEntityFrameworkStores<ApplicationDbContext>()
+builder.Services.AddIdentity<Teacher, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders().AddErrorDescriber<PersianIdentityErrorDescriber>();
 builder.Services.Configure<SecurityStampValidatorOptions>(option =>
 {

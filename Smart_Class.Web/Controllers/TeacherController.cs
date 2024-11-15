@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Smart_Class.Web.Application.Contracts;
 using Smart_Class.Web.Application.Dtos;
+using Smart_Class.Web.Core.Domain;
 
 namespace Smart_Class.Web.Controllers
 {
@@ -8,16 +11,18 @@ namespace Smart_Class.Web.Controllers
     {
         private readonly IClassService _classService;
         private readonly ITeacherService _teacherService;
-        public TeacherController(IClassService classService, ITeacherService teacheService)
+        private readonly UserManager<Teacher> _userManager;
+        public TeacherController(IClassService classService, ITeacherService teacheService, UserManager<Teacher> userManager)
         {
             _classService = classService;
             _teacherService = teacheService;
+            _userManager = userManager;
         }
         public async Task<IActionResult> Index(string Title = "")
         {
             try
             {
-                if (Title != null)
+                if (Title != "")
                     ViewBag.Title = Title;
                 var res = await _teacherService.GetAllTeacher(Title);
                 return View(res);
@@ -28,8 +33,10 @@ namespace Smart_Class.Web.Controllers
             }
 
         }
-        public IActionResult CreateTeacher()
+        public async Task<IActionResult> CreateTeacher()
         {
+            var roles = await _teacherService.GetaAllRole();
+            ViewBag.Roles = new SelectList(roles, "Name", "Persian_Name");
             return View();
         }
         [HttpPost]
@@ -37,6 +44,7 @@ namespace Smart_Class.Web.Controllers
         {
             try
             {
+              
                 var res = await _teacherService.AddTeacher(addTeacher);
                 return RedirectToAction(nameof(Index));
             }
@@ -47,7 +55,10 @@ namespace Smart_Class.Web.Controllers
         }
         public async Task<IActionResult> UpdateTeacher(Guid Id)
         {
+            
             var Teacher = await _teacherService.GetTeacherById(Id);
+            var roles = await _teacherService.GetaAllRole();
+            ViewBag.Roles = new SelectList(roles, "Name", "Persian_Name", Teacher.RoleName);
             return View(Teacher);
         }
         [HttpPost]
@@ -55,7 +66,7 @@ namespace Smart_Class.Web.Controllers
         {
             try
             {
-                var res = await _teacherService.UpdateTeacher(updateTeacher);
+                await _teacherService.UpdateTeacher(updateTeacher);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

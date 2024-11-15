@@ -1,4 +1,5 @@
 ﻿using Smart_Class.Web.Application.Dtos;
+using Smart_Class.Web.Core.Domain.Ipd;
 
 namespace Smart_Class.Web.Application.Contracts
 {
@@ -7,8 +8,11 @@ namespace Smart_Class.Web.Application.Contracts
         Task<IEnumerable<TeacherDto>> GetAllTeacher(string? Title = "");
         Task<IEnumerable<ClassDto>> getAllClassByTeacherId(Guid Teacherid);
         Task<TeacherDto> GetTeacherById(Guid Id);
-        Task<TeacherDto> AddTeacher(AddTeacherDto addTeacher);
-        Task<TeacherDto> UpdateTeacher(UpdateTeacherDto updateTeacher);
+        Task<List<string>> AddTeacher(AddTeacherDto addTeacher);
+        Task UpdateTeacher(UpdateTeacherDto updateTeacher);
         Task RemoveTeacher(Guid Id);
+        Task<bool> SigninPersonel(SigninUserDto userDto);
+        Task<bool> ChangePassKey(ChangePasswordDto change);
+        Task<IEnumerable<ApplicationRole>> GetaAllRole();
     }
 }
