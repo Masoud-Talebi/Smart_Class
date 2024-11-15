@@ -26,9 +26,9 @@ namespace Smart_Class.Web.Application.Initializer
 
             Teacher user = new Teacher
             {
-                FirstName = "pouria",
-                LastName = "Rahnama",
-                UserName = "pouriarahnama",
+                FirstName = "Masoud",
+                LastName = "Talebi",
+                UserName = "Masoud1384",
                 EmailConfirmed = true,
                 SSID = "1274685591"
             };

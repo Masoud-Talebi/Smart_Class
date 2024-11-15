@@ -30,17 +30,21 @@
             <thead>
                 <tr class="center">
                     <th>عنوان </th>
-                    <th>Ip کلاس </th>
+                    @if (User.IsInRole(SD.Admin))
+                    {
+                        <th>Ip کلاس </th>
+                    }
                     <th>کد کلاس </th>
                     <th>تاریخ شروع کلاس</th>
                     <th>ساعت شروع کلاس</th>
                     <th>ساعت پایان کلاس</th>
                     <th> نام استاد </th>
                     <th>شروع</th>
-                    @* @if(Is Owner){ *@
+                    @if (User.IsInRole(SD.Admin))
+                    {
                     <th>ویرایش</th>
                     <th>حذف</th>
-                    @* } *@
+                    }
                 </tr>
             </thead>
             <tbody>
@@ -48,7 +52,10 @@
                 {
                     <tr class="center">
                         <td>@item.Name</td>
-                        <td>@item.Class_IP</td>
+                        @if (User.IsInRole(SD.Admin))
+                        {
+                            <td>@item.Class_IP</td>
+                        }
                         <td>@item.Code</td>
                         <td>@item.Time_Holding</td>
                         <td>@item.start_Time</td>
@@ -59,7 +66,7 @@
                                 شروع
                             </a>
                         </td>
-                    @* @if(Is Owner){ *@
+                    @if(User.IsInRole(SD.Admin)){
                         <td>
                             <a asp-action="UpdateClass" asp-route-Id="@item.Id">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24"
@@ -90,7 +97,7 @@
                             </form>
                         </td>
 
-                    @* } *@
+                    } 
                     </tr>
                 }
             </tbody>

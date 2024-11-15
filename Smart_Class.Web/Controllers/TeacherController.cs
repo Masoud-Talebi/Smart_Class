@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,6 +8,7 @@ using Smart_Class.Web.Core.Domain;
 
 namespace Smart_Class.Web.Controllers
 {
+    [Authorize(Roles = SD.Admin)]
     public class TeacherController : Controller
     {
         private readonly IClassService _classService;
@@ -46,12 +48,18 @@ namespace Smart_Class.Web.Controllers
             {
               
                 var res = await _teacherService.AddTeacher(addTeacher);
-                return RedirectToAction(nameof(Index));
+                if (res.Count == 0) return RedirectToAction(nameof(Index));
+
+                foreach (var error in res) ModelState.AddModelError("", error);
+
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+            var roles = await _teacherService.GetaAllRole();
+            ViewBag.Roles = new SelectList(roles, "Name", "Persian_Name", addTeacher.RoleName);
+            return View("CreateTeacher", addTeacher);
         }
         public async Task<IActionResult> UpdateTeacher(Guid Id)
         {

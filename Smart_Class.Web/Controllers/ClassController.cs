@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Smart_Class.Web.Application.Contracts;
 using Smart_Class.Web.Application.Dtos;
@@ -6,6 +7,7 @@ using Smart_Class.Web.Core.Domain;
 
 namespace Smart_Class.Web.Controllers
 {
+    [Authorize]
     public class ClassController : Controller
     {
         private readonly IClassService _classService;
@@ -30,6 +32,7 @@ namespace Smart_Class.Web.Controllers
             }
 
         }
+        [Authorize(Roles = SD.Admin)]
         public async Task<IActionResult> CreateClass()
         {
             var teacher = await _teacheService.GetAllTeacher();
@@ -37,6 +40,7 @@ namespace Smart_Class.Web.Controllers
             
             return View();
         }
+        [Authorize(Roles = SD.Admin)]
         [HttpPost]
         public async Task<IActionResult> CreateClass(AddClassDto addClass)
         {
@@ -50,6 +54,7 @@ namespace Smart_Class.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = SD.Admin)]
         public async Task<IActionResult> UpdateClass(Guid Id)
         {
             var teacher = await _teacheService.GetAllTeacher();
@@ -58,6 +63,7 @@ namespace Smart_Class.Web.Controllers
             
             return View(Class);
         }
+        [Authorize(Roles = SD.Admin)]
         [HttpPost]
         public async Task<IActionResult> UpdateClass(UpdateClassDto updateClass)
         {
@@ -71,6 +77,7 @@ namespace Smart_Class.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = SD.Admin)]
         [HttpPost]
         public async Task<IActionResult> DeleteClass(Guid Id){
             await _classService.RemoveClass(Id);

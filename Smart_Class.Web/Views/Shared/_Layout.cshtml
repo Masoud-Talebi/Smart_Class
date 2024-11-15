@@ -29,8 +29,8 @@
                     </a>
 
                 </div>
-                @* @if (User.Identity.IsAuthenticated && User.IsInRole(SD.Admin))
-                { *@
+                @if (User.Identity.IsAuthenticated)
+                {
                     <!-- Sidebar navigation-->
                     <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                         <ul id="sidebarnav">
@@ -42,22 +42,25 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a class="sidebar-link" asp-controller="sd" asp-action="Index" aria-expanded="false">
+                                <a class="sidebar-link" asp-controller="Presence" asp-action="Index" aria-expanded="false">
                                     <i class="ti ti-user fs-6"></i>
                                     <p class="mb-0 fs-3">حضور غیاب ها</p>
                                 </a>
                             </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" asp-controller="Teacher" asp-action="Index" aria-expanded="false">
-                                <i class="ti ti-user fs-6"></i>
-                                <p class="mb-0 fs-3">استادان</p>
-                            </a>
-                        </li>
+                            @if(User.IsInRole(SD.Admin))
+                            {
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" asp-controller="Teacher" asp-action="Index" aria-expanded="false">
+                                        <i class="ti ti-user fs-6"></i>
+                                        <p class="mb-0 fs-3">استادان</p>
+                                    </a>
+                                </li>
+                            }
                         </ul>
 
                     </nav>
                     <!-- End Sidebar navigation -->
-                @* } *@
+                }
 
             </div>
             <!-- End Sidebar scroll-->
@@ -77,12 +80,12 @@
 
                     </ul>
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-                        @* @if (User.Identity.IsAuthenticated && User.IsInRole(SD.Admin))
-                        { *@
+                        @if (User.Identity.IsAuthenticated)
+                        {
                             <ul class="navbar-nav flex-row align-items-center justify-content-end">
                                 <div class="message-body">
-                                    @* <a asp-controller="Users" asp-action="Logout" class="btn btn-outline-primary mx-3 mt-2 d-block">خروج</a> *@
-                                    <a class="btn btn-outline-primary mx-3 mt-2 d-block">کاربر : Masoud Talebi </a>
+
+                                    <a class="btn btn-outline-primary mx-3 mt-2 d-block">کاربر : @User.Identity?.Name </a>
                                 </div>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
@@ -91,21 +94,13 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-start dropdown-menu-animate-up" aria-labelledby="drop2">
                                         <div class="message-body">
-                                            <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                                                <i class="ti ti-user fs-6"></i>
-                                                <p class="mb-0 fs-3">پروفایل کاربری</p>
-                                            </a>
-                                            <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                                                <i class="ti ti-mail fs-6"></i>
-                                                <p class="mb-0 fs-3">پیغام ها</p>
-                                            </a>
 
-                                            <a href="/Admin/Users/SignOut" type="submit" class="btn btn-outline-danger mx-3 mt-2 d-block">خروج از حساب کاربری</a>
+                                            <a asp-controller="Home" asp-action="LogOut" type="submit" class="btn btn-outline-danger mx-3 mt-2 d-block">خروج از حساب کاربری</a>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
-                        @* } *@
+                        }
                     </div>
                 </nav>
             </header>

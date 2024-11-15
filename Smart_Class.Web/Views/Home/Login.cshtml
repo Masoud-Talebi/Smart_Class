@@ -1,0 +1,47 @@
+﻿@using Smart_Class.Web.Application.Dtos
+@model SigninUserDto
+@{
+    ViewData["Title"] = "ورود به سیستم";
+
+}
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h5 class="card-title fw-semibold mb-4 a">ورود به سیستم</h5>
+                    <div class="card">
+                        <div class="card-body text-end">
+                            <form asp-controller="Home" method="post" asp-action="Login">
+                                <div class="mb-3">
+                                    <label asp-for="UserName" class="form-label">نام کاربری</label>
+                                    <input asp-for="UserName" type="text" class="form-control">
+                                </div>
+                                <div class="mb-4">
+                                    <label asp-for="Password" class="form-label">رمز عبور</label>
+                                    <input asp-for="Password" type="password" class="form-control">
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <div class="form-check">
+                                        <label class="form-check-label text-dark" asp-for="RememberMe">
+                                            مرابخاطر بسپار
+                                        </label>
+                                        <input class="form-check-input primary" type="checkbox" value="" asp-for="RememberMe">
+                                    </div>
+                                </div>
+                                @if (ViewData["ErrorMessage"] != null)
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        @ViewData["ErrorMessage"]
+                                    </div>
+                                }
+                                <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">ورود به سامانه</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

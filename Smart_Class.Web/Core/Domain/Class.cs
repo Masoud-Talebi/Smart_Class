@@ -6,8 +6,8 @@
         public required string Class_IP { get; set; }
         public int Code { get; set; }
         public DateTime? Time_Holding { get; set; }
-        public DateTime? start_Time { get; set; }
-        public DateTime? End_Time { get; set; }
+        public TimeSpan? start_Time { get; set; }
+        public TimeSpan? End_Time { get; set; }
         public Guid? TeacherId { get; set; }
 
         //Navigations

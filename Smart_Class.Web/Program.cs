@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Smart_Class.Web.Common;
 using Smart_Class.Web.Core.Domain.Ipd;
+using Smart_Class.Web.Application.Initializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,9 +30,13 @@ builder.Services.AddDbContextPool<IApplicationDbContext, ApplicationDbContext>((
 
 }, poolSize: 16);
 
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
+builder.Services.AddScoped<IDbinitializer, DbInitializer>();
+builder.Services.AddScoped<IPresenceService, PresenceService>();
 #endregion
 
 #region Idp Registration
@@ -45,9 +50,9 @@ builder.Services.Configure<SecurityStampValidatorOptions>(option =>
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.AccessDeniedPath = "/Error";
-    options.Cookie.Name = "IncodityCookie";
-    options.LoginPath = "/signin";
+    options.AccessDeniedPath = "/AccessDenie";
+    options.Cookie.Name = "Smart_Class";
+    options.LoginPath = "/Login";
     options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
 });
 #endregion
@@ -59,6 +64,11 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+using (var scope = app.Services.CreateScope())
+{
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbinitializer>();
+    await dbInitializer.Initialize();
 }
 
 app.UseHttpsRedirection();

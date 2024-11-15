@@ -31,19 +31,19 @@
     <br />
     <div class="form-group">
         @Html.LabelFor(model => model.Time_Holding, htmlAttributes: new { @class = "control-label" })
-        @Html.EditorFor(model => model.Time_Holding, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(model => model.Time_Holding, new { htmlAttributes = new { @class = "form-control", type = "date" } })
         @Html.ValidationMessageFor(model => model.Time_Holding, "", new { @class = "text-danger" })
     </div>
     <br />
     <div class="form-group">
         @Html.LabelFor(model => model.start_Time, htmlAttributes: new { @class = "control-label" })
-        @Html.EditorFor(model => model.start_Time, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(model => model.start_Time, new { htmlAttributes = new { @class = "form-control", type = "time" } })
         @Html.ValidationMessageFor(model => model.start_Time, "", new { @class = "text-danger" })
     </div>
     <br />
     <div class="form-group">
         @Html.LabelFor(model => model.End_Time, htmlAttributes: new { @class = "control-label" })
-        @Html.EditorFor(model => model.End_Time, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(model => model.End_Time, new { htmlAttributes = new { @class = "form-control", type = "time" } })
         @Html.ValidationMessageFor(model => model.End_Time, "", new { @class = "text-danger" })
     </div>
     <br />

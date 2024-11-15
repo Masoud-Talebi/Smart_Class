@@ -23,19 +23,22 @@
                             <div class="card">
                                 <img src="~/Images/Precence.webp" class="card-img-top" alt=" حضور و غیاب" style="height:35vh">
                                 <div class="card-body">
-                                    <a asp-controller="Teacher" asp-action="Index" class="btn btn-outline-primary m-1">مشاهده </a>
+                                <a asp-controller="Presence" asp-action="Index" class="btn btn-outline-primary m-1">مشاهده </a>
                                 </div>
                             </div>
                         </div>
+                    @if (User.IsInRole(SD.Admin))
+                    {
                         <div class="col-md-4">
                             <h5 class="card-title fw-semibold mb-3">استادان</h5>
                             <div class="card">
-                            <img src="~/Images/Teacher.png" class="card-img-top" alt="پنل استادان" style="height:35vh">
+                                <img src="~/Images/Teacher.png" class="card-img-top" alt="پنل استادان" style="height:35vh">
                                 <div class="card-body">
                                     <a asp-controller="Teacher" asp-action="Index" class="btn btn-outline-primary m-1">مشاهده </a>
                                 </div>
                             </div>
                         </div>
+                    }
 
                         <div>
                             @if (TempData["Success"] != null)
