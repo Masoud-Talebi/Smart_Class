@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Smart_Class.Web.Application.Contracts;
 using Smart_Class.Web.Core.Domain;
 
 namespace Smart_Class.Web.Controllers
 {
+    [Authorize(Roles = SD.Admin)]
     public class PresenceController : Controller
     {
         private readonly IClassService _classService;
@@ -14,11 +16,8 @@ namespace Smart_Class.Web.Controllers
             _classService = classService;
             _presenceService = presenceService;
         }
-        public async Task<IActionResult> Index(string dateper, string Title, Guid ClassId)
+        public async Task<IActionResult> Index(DateTime date, string Title, Guid ClassId)
         {
-            if(dateper != null)
-                dateee.ConvertDate(dateper);
-            var date = DateTime.Now;
             var classes =await _classService.GetAllClasses();
             ViewBag.Classes = new SelectList(classes, "Id", "Name");
             if (date != null) ViewBag.Date = date;
